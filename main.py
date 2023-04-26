@@ -1,15 +1,22 @@
 import requests
 from email_send import send_email
+from functions import get_prev_month_date
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 topic = "tesla"
 
-api_key = "3f169ce745964b1d86f94ea12ff4ad4c"
-url = f"https://newsapi.org/v2/everything?q={topic}" \
-      f"&from=2023-02-15&sortBy=publishedAt&" \
-      f"apiKey=3f169ce745964b1d86f94ea12ff4ad4c&language=en"
+api_key = os.getenv("APIKEY")
+
+prev_date = get_prev_month_date()
+url1 = f"https://newsapi.org/v2/everything?q={topic}" \
+       f"&from={prev_date}&sortBy=publishedAt&" \
+       f"apiKey={api_key}"
 
 # Make request
-request = requests.get(url)
+request = requests.get(url1)
 
 # Get a dictionary with data
 content = request.json()
